@@ -1,0 +1,75 @@
+.wrapper{
+  @apply py-10;
+
+  .filterWrapper {
+    @apply flex flex-row justify-between flex-wrap px-4;
+
+    .filter {
+      @apply border-none flex flex-row items-center;
+
+      .label{
+        @apply text-base text-black font-bold;
+      }
+
+      .input{
+        @apply w-64 border border-gray-300 rounded-md mx-4 px-4 py-2;
+        
+        &:focus, &:focus-visible, &:focus-within {
+          @apply outline-none;
+        }
+      }
+    }
+
+    .genderSelect {
+      @apply w-32;
+    }
+  }
+
+  .tableWrapper {
+    @apply flex flex-col my-5;
+
+    .overflow {
+      @apply -my-2 overflow-x-auto overflow-y-auto sm:-mx-6 lg:-mx-8;
+      
+      .contentWrapper {
+        @apply inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8;
+
+        .content {
+          @apply overflow-hidden border-b border-gray-200 shadow sm:rounded-lg;
+          
+          .table {
+            @apply min-w-full divide-y divide-gray-200;
+            
+            .thead {
+              @apply bg-gray-50;
+
+              .th {
+                @apply px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pagenationWrapper {
+    @apply flex flex-row justify-between flex-wrap gap-2 px-4;
+
+    .pageNumWrapper {
+      @apply flex flex-row items-center;
+
+      .pageNumSelect {
+        @apply w-32;
+      }
+
+      .pageNum {
+        @apply text-gray-500 ml-5;
+      }
+    }
+
+    .pagenation {
+      @apply flex flex-row ;
+    }
+  }
+}

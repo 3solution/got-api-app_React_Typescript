@@ -1,0 +1,27 @@
+.wrapper {
+  @apply flex flex-col;
+
+  .mainContent {
+    @apply p-4 grid lg:grid-cols-5 lg:px-20 md:grid-cols-4 grid-cols-2;
+
+    .title {
+      @apply md:col-span-2 col-span-1 font-bold text-lg py-2;
+    }
+
+    .value {
+      @apply lg:col-span-3 md:col-span-2 col-span-1 text-lg py-2 flex flex-col;
+
+      .array {
+        @apply text-lg;
+      }
+    }
+  }
+
+  .backButtonWrapper {
+    @apply flex justify-center items-center my-10;
+
+    .button {
+      @apply px-4 py-2 text-xl text-black border rounded-md border-gray-500 hover:bg-slate-200 focus:bg-slate-100;
+    }
+  }
+}

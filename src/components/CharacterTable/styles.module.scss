@@ -1,0 +1,13 @@
+.wrapper {
+  .tdCharacter {
+    @apply px-6 py-4 text-sm text-gray-900 whitespace-nowrap;
+  }
+
+  .td {
+    @apply px-6 py-4 text-sm text-gray-500 whitespace-nowrap;
+  }
+
+  .tdLink {
+    @apply px-6 py-4 text-sm  text-indigo-600 hover:text-indigo-900 whitespace-nowrap;
+  }
+}

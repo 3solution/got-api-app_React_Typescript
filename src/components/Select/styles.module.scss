@@ -1,0 +1,47 @@
+.contentWrapper {
+  @apply w-full mt-1 relative;
+
+  .listBoxButton {
+    @apply w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm;
+  
+    .selectedItem {
+      @apply block truncate;
+    }
+
+    .selectedIconWrapper {
+      @apply absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none;
+
+      .selectIcon {
+        @apply w-5 h-5 text-gray-400;
+      }
+    }
+  }
+
+  .listBoxOptionWrapper {
+    @apply absolute py-1 mt-1 w-full overflow-auto text-base bg-gray-100 z-50  rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm;
+
+    .content {
+      @apply relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900;
+
+      &.active {
+        @apply bg-amber-100 text-amber-900;
+      }
+
+      .text {
+        @apply block truncate font-normal;
+
+        &.selected {
+          @apply font-medium;
+        }
+      }
+
+      .icon {
+        @apply absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600;
+
+        .checkIcon {
+          @apply w-5 h-5;
+        }
+      }
+    }
+  }
+}
