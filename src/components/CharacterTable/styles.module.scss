@@ -1,13 +1,27 @@
-.wrapper {
-  .tdCharacter {
-    @apply px-6 py-4 text-sm text-gray-900 whitespace-nowrap;
-  }
+.tableWrapper {
+  @apply flex flex-col my-5;
 
-  .td {
-    @apply px-6 py-4 text-sm text-gray-500 whitespace-nowrap;
-  }
+  .overflow {
+    @apply -my-2 overflow-x-auto overflow-y-auto sm:-mx-6 lg:-mx-8;
 
-  .tdLink {
-    @apply px-6 py-4 text-sm  text-indigo-600 hover:text-indigo-900 whitespace-nowrap;
+    .contentWrapper {
+      @apply inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8;
+
+      .content {
+        @apply overflow-hidden border-b border-gray-200 shadow sm:rounded-lg;
+
+        .table {
+          @apply min-w-full divide-y divide-gray-200;
+
+          .thead {
+            @apply bg-gray-50;
+
+            .th {
+              @apply px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase;
+            }
+          }
+        }
+      }
+    }
   }
 }

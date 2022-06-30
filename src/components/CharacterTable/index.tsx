@@ -1,32 +1,57 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
-
-import Select from '../Select';
+import React from 'react';
+import CharacterRow from './CharacterRow';
 
 import styles from './styles.module.scss';
 
 type Props = {
-  character: string;
-  alive: string;
+  characters: Array<CharacterType>;
   gender: string;
-  culture: string;
-  allegiances: SelectOptionType[];
-  className?: string;
+  filter: string;
 };
 
-const CharacterTable: React.FC<Props> = ({ character, alive, gender, culture, allegiances, className = '' }) => {
-  const [selectedLink, setSelectedLink] = useState<SelectOptionType>({ ...allegiances[0] });
-
+const CharacterTable: React.FC<Props> = ({ characters, gender, filter }) => {
   return (
-    <tr className={classNames(styles.wrapper, className)}>
-      <td className={styles.tdCharacter}>{character}</td>
-      <td className={styles.td}>{alive}</td>
-      <td className={styles.td}>{gender}</td>
-      <td className={styles.td}>{culture}</td>
-      <td className={styles.tdLink}>
-        <Select options={allegiances} selectedItem={selectedLink} setSelectedItem={setSelectedLink} link={true} />
-      </td>
-    </tr>
+    <div className={styles.tableWrapper}>
+      <div className={styles.overflow}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.content}>
+            <table className={styles.table}>
+              <thead className={styles.thead}>
+                <tr>
+                  <th scope="col" className={styles.th}>
+                    Character
+                  </th>
+                  <th scope="col" className={styles.th}>
+                    Alive
+                  </th>
+                  <th scope="col" className={styles.th}>
+                    Gender
+                  </th>
+                  <th scope="col" className={styles.th}>
+                    Culture
+                  </th>
+                  <th scope="col" className={styles.th}>
+                    Allegiances
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {characters !== undefined &&
+                  characters
+                    .filter(
+                      item =>
+                        (filter && filter.length > 0
+                          ? item.culture.toLowerCase().includes(filter.toLowerCase())
+                          : true) &&
+                        (gender.toLowerCase() !== 'all' ? item.gender.toLowerCase() === gender.toLowerCase() : true)
+                    )
+                    .map((character: CharacterType, index) => <CharacterRow key={index} character={character} />)}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

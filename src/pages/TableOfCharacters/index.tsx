@@ -7,28 +7,19 @@ import Select from '../../components/Select';
 
 import styles from './styles.module.scss';
 
-const pageSize: SelectOptionType[] = [
-  { label: '10', value: '10' },
-  { label: '25', value: '25' },
-  { label: '50', value: '50' },
-];
+const pageSize: Array<string> = ['10', '25', '50'];
 
-const gender: SelectOptionType[] = [
-  { label: 'All', value: 'All' },
-  { label: 'Male', value: 'Male' },
-  { label: 'Female', value: 'Female' },
-];
+const gender: Array<string> = ['All', 'Male', 'Female'];
 
 const TableOfCharacters = () => {
-  const [selectedPageSize, setSelectedPageSize] = useState<SelectOptionType>(pageSize[0]);
-  const [selectedGender, setSelectedGender] = useState<SelectOptionType>(gender[0]);
+  const [selectedPageSize, setSelectedPageSize] = useState<string>(pageSize[0]);
+  const [selectedGender, setSelectedGender] = useState<string>(gender[0]);
+  // const [selectedLink, setSelectedLink] = useState<string>('No');
   const [pageNum, setPageNum] = useState<number>(1);
   const [filter, setFilter] = useState<string>('');
-  const [characters, setCharacters] = useState<Array<CharacterType>>();
+  const [characters, setCharacters] = useState<Array<CharacterType>>([]);
 
   const getCharacterData = async (size: number, num: number) => {
-    console.log('process.env.REACT_APP_API_Character:', process.env.REACT_APP_API_Character);
-
     const res = await axios.get(`https://www.anapioficeandfire.com/api/characters`, {
       params: {
         pageSize: size,
@@ -64,20 +55,17 @@ const TableOfCharacters = () => {
           alive: aliveString,
           gender: item.gender,
           culture: item.culture === '' ? 'Unknown' : item.culture,
-          houseDetail:
+          allegiances:
             item.allegiances.length === 0
-              ? [{ value: 'No allegiances', label: 'No allegiances' }]
-              : item.allegiances.map((aItem: any) => ({
-                  label: aItem.match(/\d+/g),
-                  value: aItem.match(/\d+/g),
-                })),
+              ? ['No allegiances']
+              : item.allegiances.map((aItem: any) => aItem.match(/\d+/g)[0]),
         };
       }),
     ]);
   };
 
   useEffect(() => {
-    getCharacterData(parseInt(selectedPageSize.value), pageNum);
+    getCharacterData(parseInt(selectedPageSize), pageNum);
   }, [selectedPageSize, pageNum]);
 
   return (
@@ -101,59 +89,7 @@ const TableOfCharacters = () => {
           link={false}
         />
       </div>
-      <div className={styles.tableWrapper}>
-        <div className={styles.overflow}>
-          <div className={styles.contentWrapper}>
-            <div className={styles.content}>
-              <table className={styles.table}>
-                <thead className={styles.thead}>
-                  <tr>
-                    <th scope="col" className={styles.th}>
-                      Character
-                    </th>
-                    <th scope="col" className={styles.th}>
-                      Alive
-                    </th>
-                    <th scope="col" className={styles.th}>
-                      Gender
-                    </th>
-                    <th scope="col" className={styles.th}>
-                      Culture
-                    </th>
-                    <th scope="col" className={styles.th}>
-                      Allegiances
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {characters !== undefined &&
-                    characters
-                      .filter(
-                        item =>
-                          (filter && filter.length > 0
-                            ? item.culture.toLowerCase().includes(filter.toLowerCase())
-                            : true) &&
-                          (selectedGender.value.toLowerCase() !== 'all'
-                            ? item.gender.toLowerCase() === selectedGender.value.toLowerCase()
-                            : true)
-                      )
-                      .map((item, index: number) => (
-                        <CharacterTable
-                          key={index}
-                          character={item.name}
-                          alive={item.alive}
-                          gender={item.gender}
-                          culture={item.culture}
-                          allegiances={item.houseDetail}
-                          className={index % 2 == 0 ? 'bg-white' : 'bg-gray-50'}
-                        />
-                      ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CharacterTable characters={characters} gender={selectedGender} filter={filter} />
       <div className={styles.pagenationWrapper}>
         <div className={styles.pageNumWrapper}>
           <Select
@@ -186,9 +122,9 @@ const TableOfCharacters = () => {
               setPageNum(prev => prev + 1);
             }}
             disable={
-              (selectedPageSize.value === '10' && pageNum === 214) ||
-              (selectedPageSize.value === '25' && pageNum === 85) ||
-              (selectedPageSize.value === '50' && pageNum === 43)
+              (selectedPageSize === '10' && pageNum === 214) ||
+              (selectedPageSize === '25' && pageNum === 85) ||
+              (selectedPageSize === '50' && pageNum === 43)
                 ? true
                 : false
             }
@@ -196,7 +132,7 @@ const TableOfCharacters = () => {
           <CustomButton
             text="Last page"
             onClick={() => {
-              setPageNum(selectedPageSize.value === '10' ? 214 : selectedPageSize.value === '25' ? 85 : 43);
+              setPageNum(selectedPageSize === '10' ? 214 : selectedPageSize === '25' ? 85 : 43);
             }}
             className={'rounded-r-md'}
           />

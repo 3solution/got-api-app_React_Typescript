@@ -1,14 +1,9 @@
-type SelectOptionType = {
-  label: string;
-  value: string;
-};
-
 type CharacterType = {
   name: string;
   alive: string;
   gender: string;
   culture: string;
-  houseDetail: SelectOptionType[];
+  allegiances: Array<string>;
 };
 
 type HouseDetailsType = {
@@ -16,8 +11,8 @@ type HouseDetailsType = {
   region: string;
   costOfArms: string;
   words: string;
-  titles: string[];
-  seats: string[];
+  titles: Array<string>;
+  seats: Array<string>;
   diedOut: string;
   overlord: string;
   cadetBranches: number;

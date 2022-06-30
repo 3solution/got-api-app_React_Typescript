@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 
@@ -9,9 +9,9 @@ import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
 
 type Props = {
-  options: SelectOptionType[];
-  selectedItem: SelectOptionType;
-  setSelectedItem: React.Dispatch<React.SetStateAction<SelectOptionType>>;
+  options: Array<string>;
+  selectedItem: string;
+  setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
   link: boolean;
   className?: string;
 };
@@ -22,7 +22,7 @@ const Select: React.FC<Props> = ({ className = '', options, selectedItem, setSel
       <Listbox value={selectedItem} onChange={setSelectedItem}>
         <div className={styles.contentWrapper}>
           <Listbox.Button className={styles.listBoxButton}>
-            <span className={styles.selectedItem}>{selectedItem.label}</span>
+            <span className={styles.selectedItem}>{selectedItem}</span>
             <span className={styles.selectedIconWrapper}>
               <SelectIcon className={styles.selectIcon} />
             </span>
@@ -41,15 +41,15 @@ const Select: React.FC<Props> = ({ className = '', options, selectedItem, setSel
                 >
                   {({ selected }) => (
                     <>
-                      {link === true && item.label !== 'No allegiances' ? (
+                      {link === true && item !== 'No allegiances' ? (
                         <Link
                           to="/housedetails"
                           className={classNames(styles.text, {
                             [styles.selected]: selected,
                           })}
-                          state={{ homeAPI: item.value }}
+                          state={{ homeAPI: item }}
                         >
-                          {item.label}
+                          {item}
                         </Link>
                       ) : (
                         <span
@@ -57,7 +57,7 @@ const Select: React.FC<Props> = ({ className = '', options, selectedItem, setSel
                             [styles.selected]: selected,
                           })}
                         >
-                          {item.label}
+                          {item}
                         </span>
                       )}
                       {selected ? (
